@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('table_id')->constrained('tables')->onDelete('cascade');
+            $table->foreignId('table_id')->constrained('restaurant_tables')->onDelete('cascade');
             $table->foreignId('user_id')->nullable()->constrained('users')->nullOnDelete();
             $table->enum('status', ['open', 'closed'])->default('open');
             $table->decimal('total_price', 10, 2)->default(0);
