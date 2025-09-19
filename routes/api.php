@@ -18,14 +18,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/me', [AuthController::class, 'me']);
 
-    // Route for pelayan role
+    // Route for kasir role
     Route::middleware('role:kasir')->group(function () {
+        Route::post('/foods', [FoodController::class, 'store']);
+        Route::put('/foods/{food}', [FoodController::class, 'update']);
+        Route::delete('/foods/{food}', [FoodController::class, 'destroy']);
     });
-});
-
-// protected routes for kasir
-Route::middleware(['auth:sanctum', 'role:kasir'])->group(function () {
-    Route::post('/foods', [FoodController::class, 'store']);
-    Route::put('/foods/{food}', [FoodController::class, 'update']);
-    Route::delete('/foods/{food}', [FoodController::class, 'destroy']);
 });
