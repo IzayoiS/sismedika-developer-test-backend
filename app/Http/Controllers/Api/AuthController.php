@@ -13,14 +13,14 @@ class AuthController extends Controller
     public function register(Request $r)
     {
         $r->validate([
-            'name' => 'required|string',
+            'fullname' => 'required|string',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|confirmed|min:6',
             'role' => 'nullable|in:pelayan,kasir'
         ]);
 
         $user = User::create([
-            'name' => $r->name,
+            'fullname' => $r->fullname,
             'email' => $r->email,
             'password' => Hash::make($r->password),
             'role' => $r->role ?? 'pelayan'
