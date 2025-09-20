@@ -90,4 +90,23 @@ class FoodController extends Controller
         ], 200);
     }
 
+    public function updateStatus(Request $request, $id)
+    {
+        $food = Food::findOrFail($id);
+
+        $data = $request->validate([
+            'is_active' => 'required|boolean'
+        ]);
+
+        $food->update($data);
+
+        return response()->json(
+            [
+                'status' => 'success',
+                'message' => 'Food status updated successfully',
+                'data' => $food
+            ],
+            200
+        );
+    }
 }
