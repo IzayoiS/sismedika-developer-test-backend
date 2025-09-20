@@ -26,12 +26,9 @@ class AuthController extends Controller
             'role' => $r->role ?? 'pelayan'
         ]);
 
-        $token = $user->createToken('api-token')->plainTextToken;
-
         return response()->json([
             'message' => 'User registered successfully',
             'user' => $user,
-            'token' => $token
         ], 201);
     }
 
