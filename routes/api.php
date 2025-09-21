@@ -30,6 +30,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/orders/{id}', [OrderController::class, 'show']);
     Route::post('/orders', [OrderController::class, 'store']);
     Route::post('/orders/{id}/items', [OrderController::class, 'addItem']);
+    Route::put('/orders/{id}/close', [OrderController::class, 'closeOrder']);
+    Route::get('/orders/{id}/receipt', [OrderController::class, 'receipt']);
 
     // Route for kasir role
     Route::middleware('role:kasir')->group(function () {
