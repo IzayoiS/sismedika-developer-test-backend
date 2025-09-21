@@ -45,9 +45,15 @@ class TableController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        $table = Table::findOrFail($id);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Table retrieved successfully',
+            'data' => $table
+        ], 200);
     }
 
     /**
