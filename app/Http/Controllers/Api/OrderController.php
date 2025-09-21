@@ -7,6 +7,7 @@ use App\Models\Food;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Table;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -109,6 +110,31 @@ class OrderController extends Controller
         });
 
         return response()->json($order->load('items.food'));
+    }
+
+    public function closeOrder($id)
+    {
+        $order = Order::with('items')->where('status', 'open')->findOrFail($id);
+
+        $total = $order->items->sum('subtotal');
+        $order->update([
+            'status' => 'closed',
+            'total_price' => $total,
+            'closed_at' => now(),
+        ]);
+
+        $order->table->update(['status' => 'available']);
+
+        return response()->json(['message' => 'Order closed', 'order' => $order]);
+    }
+
+    public function receipt($id)
+    {
+        $order = Order::with(['items.food', 'table', 'user'])->findOrFail($id);
+
+        $pdf = Pdf::loadView('pdf.receipt', compact('order'));
+
+        return $pdf->download("receipt-{$order->id}.pdf");
     }
 
 }
