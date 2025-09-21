@@ -109,4 +109,18 @@ class FoodController extends Controller
             200
         );
     }
+
+    // app/Http/Controllers/Api/FoodController.php
+    public function getCategories()
+    {
+        $categories = Food::distinct()
+            ->whereNotNull('category')
+            ->where('category', '!=', '')
+            ->pluck('category')
+            ->filter()
+            ->values()
+            ->toArray();
+
+        return response()->json($categories);
+    }
 }
