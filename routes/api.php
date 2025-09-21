@@ -7,9 +7,11 @@ use App\Http\Controllers\Api\TableController;
 use Illuminate\Support\Facades\Route;
 
 // public
+Route::get('/foods/categories', [FoodController::class, 'getCategories']);
 Route::get('/foods', [FoodController::class, 'index']);
 Route::get('/foods/{food}', [FoodController::class, 'show']);
 Route::get('/tables', [TableController::class, 'index']);
+Route::get('/tables/{id}', [TableController::class, 'show']);
 
 // auth
 Route::post('/register', [AuthController::class, 'register']);
